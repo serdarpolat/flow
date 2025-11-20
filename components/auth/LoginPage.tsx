@@ -1,9 +1,11 @@
-import React from 'react';
-import { Bot, ArrowLeft, Mail, Lock } from 'lucide-react';
+import React, { useState } from 'react';
+import { Bot, Mail, Lock, User } from 'lucide-react';
 import Button from '../ui/Button';
 import { Link } from 'react-router-dom';
 
 const LoginPage: React.FC = () => {
+  const [isLogin, setIsLogin] = useState(true);
+
   return (
     <div className="min-h-screen bg-slate-950 flex relative overflow-hidden">
       
@@ -27,9 +29,13 @@ const LoginPage: React.FC = () => {
           </div>
           
           <div className="max-w-md">
-             <h1 className="text-4xl font-bold text-white mb-6">Experience the future of communication</h1>
+             <h1 className="text-4xl font-bold text-white mb-6">
+               {isLogin ? "Experience the future of communication" : "Join the AI revolution"}
+             </h1>
              <p className="text-slate-400 text-lg leading-relaxed">
-               Join thousands of developers and creators using BotBuzz to accelerate their workflow and unlock new creative possibilities.
+               {isLogin 
+                 ? "Join thousands of developers and creators using BotBuzz to accelerate their workflow and unlock new creative possibilities."
+                 : "Create an account today and start building the future with the power of BotBuzz AI at your fingertips."}
              </p>
           </div>
 
@@ -52,8 +58,12 @@ const LoginPage: React.FC = () => {
             </div>
 
             <div className="text-center lg:text-left">
-              <h2 className="text-3xl font-bold text-white tracking-tight">Welcome back</h2>
-              <p className="mt-2 text-slate-400">Enter your details to access your account</p>
+              <h2 className="text-3xl font-bold text-white tracking-tight">
+                {isLogin ? "Welcome back" : "Create an account"}
+              </h2>
+              <p className="mt-2 text-slate-400">
+                {isLogin ? "Enter your details to access your account" : "Enter your details to get started"}
+              </p>
             </div>
 
             {/* Social Logins */}
@@ -77,12 +87,28 @@ const LoginPage: React.FC = () => {
 
             <div className="relative flex items-center">
               <div className="flex-grow border-t border-slate-800"></div>
-              <span className="flex-shrink-0 mx-4 text-slate-500 text-sm">Or continue with email</span>
+              <span className="flex-shrink-0 mx-4 text-slate-500 text-sm">
+                {isLogin ? "Or continue with email" : "Or sign up with email"}
+              </span>
               <div className="flex-grow border-t border-slate-800"></div>
             </div>
 
             {/* Form */}
             <form className="space-y-6" onSubmit={(e) => e.preventDefault()}>
+              {!isLogin && (
+                <div className="space-y-2 animate-in fade-in slide-in-from-bottom-4 duration-300">
+                  <label className="text-sm font-medium text-slate-300">Full Name</label>
+                  <div className="relative">
+                    <User className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 h-5 w-5" />
+                    <input 
+                      type="text" 
+                      className="w-full bg-slate-950 border border-slate-800 rounded-xl px-10 py-3 text-white placeholder:text-slate-600 focus:outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500 transition-all"
+                      placeholder="John Doe"
+                    />
+                  </div>
+                </div>
+              )}
+
               <div className="space-y-2">
                 <label className="text-sm font-medium text-slate-300">Email address</label>
                 <div className="relative">
@@ -98,7 +124,7 @@ const LoginPage: React.FC = () => {
               <div className="space-y-2">
                 <div className="flex justify-between">
                   <label className="text-sm font-medium text-slate-300">Password</label>
-                  <a href="#" className="text-sm text-brand-400 hover:text-brand-300">Forgot password?</a>
+                  {isLogin && <a href="#" className="text-sm text-brand-400 hover:text-brand-300">Forgot password?</a>}
                 </div>
                 <div className="relative">
                   <Lock className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 h-5 w-5" />
@@ -111,13 +137,20 @@ const LoginPage: React.FC = () => {
               </div>
 
               <Button className="w-full py-3.5 text-base">
-                Sign In
+                {isLogin ? "Sign In" : "Create Account"}
               </Button>
             </form>
 
             <div className="text-center">
-              <span className="text-slate-500">Don't have an account? </span>
-              <a href="#" className="text-brand-400 font-medium hover:text-brand-300">Sign up</a>
+              <span className="text-slate-500">
+                {isLogin ? "Don't have an account? " : "Already have an account? "}
+              </span>
+              <button 
+                onClick={() => setIsLogin(!isLogin)}
+                className="text-brand-400 font-medium hover:text-brand-300 focus:outline-none"
+              >
+                {isLogin ? "Sign up" : "Sign in"}
+              </button>
             </div>
 
           </div>
