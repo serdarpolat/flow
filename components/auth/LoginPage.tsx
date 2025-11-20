@@ -10,7 +10,7 @@ const LoginPage: React.FC = () => {
   const handleAuth = (e: React.FormEvent) => {
     e.preventDefault();
     // In a real app, we would validate and call an API here
-    navigate('/dashboard');
+    navigate('/onboarding');
   };
 
   return (
