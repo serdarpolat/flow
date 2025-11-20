@@ -1,10 +1,17 @@
 import React, { useState } from 'react';
 import { Bot, Mail, Lock, User } from 'lucide-react';
 import Button from '../ui/Button';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const LoginPage: React.FC = () => {
   const [isLogin, setIsLogin] = useState(true);
+  const navigate = useNavigate();
+
+  const handleAuth = (e: React.FormEvent) => {
+    e.preventDefault();
+    // In a real app, we would validate and call an API here
+    navigate('/dashboard');
+  };
 
   return (
     <div className="min-h-screen bg-slate-950 flex relative overflow-hidden">
@@ -94,7 +101,7 @@ const LoginPage: React.FC = () => {
             </div>
 
             {/* Form */}
-            <form className="space-y-6" onSubmit={(e) => e.preventDefault()}>
+            <form className="space-y-6" onSubmit={handleAuth}>
               {!isLogin && (
                 <div className="space-y-2 animate-in fade-in slide-in-from-bottom-4 duration-300">
                   <label className="text-sm font-medium text-slate-300">Full Name</label>
@@ -136,7 +143,7 @@ const LoginPage: React.FC = () => {
                 </div>
               </div>
 
-              <Button className="w-full py-3.5 text-base">
+              <Button type="submit" className="w-full py-3.5 text-base">
                 {isLogin ? "Sign In" : "Create Account"}
               </Button>
             </form>
